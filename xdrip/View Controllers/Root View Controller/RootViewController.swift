@@ -568,6 +568,12 @@ final class RootViewController: UIViewController {
             
             trace("in processNewGlucoseData, calibrationsAccessor or coreDataManager or cgmTransmitter is nil", log: log, category: ConstantsLog.categoryRootView, type: .error)
             
+            for reading in glucoseData {
+                debuglogging("reading timestamp " + reading.timeStamp.description(with: .current))
+                debuglogging("reading glucoseLevelRaw " + reading.glucoseLevelRaw.description)
+                debuglogging(" ")
+            }
+            
             return
             
         }
