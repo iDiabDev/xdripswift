@@ -295,41 +295,41 @@ final class RootViewController: UIViewController {
             }
             
             // test bubble data
-            if let patchInfoAsData = Data(hexadecimalString: "c1000a0000a20800010f3a091900") {
+            if let patchInfoAsData = Data(hexadecimalString: "c1000a0000a2080001d929f83000") {
                 
                 let patchInfo = patchInfoAsData.subdata(in: 5 ..< 11).hexEncodedString().uppercased()
                 debuglogging("patchInfo = " + patchInfo)
                 
-                var test = "8715db6100a007e0"
-                test = test + "0e0c9019030000000000000000000000"
-                test = test + "0000000000000000b7b00f1e3505c8b4"
-                test = test + "59803905c8a419804005c8a059804405"
-                test = test + "c89459804605c8a459805305c8a85980"
-                test = test + "5f05c8a059806505c88c59806b05c880"
-                test = test + "59806f05c87459807805c86459807905"
-                test = test + "c86059808305c85859808105c8605980"
-                test = test + "7d05c88059803005c8bc59809605c844"
-                test = test + "5a802705c86c5a804405c8205a80be05"
-                test = test + "c8d059801b06c87c5b806f06c8bc5a80"
-                test = test + "3f05c88c5c80a504c8ec5a80cc04c8f0"
-                test = test + "5980ba05c89818808106c8f417806206"
-                test = test + "c8c45b802606c8405b80c105c8645a80"
-                test = test + "4705c8001a80f104c8145a80b204c810"
-                test = test + "1a807804c84c1a808404c80419806704"
-                test = test + "c8681a80f703c8681a801804c84c5a80"
-                test = test + "8104c8485a80a804c82c5a80d004c894"
-                test = test + "5a802805c8fc5980df04c83c5a809a04"
-                test = test + "c8085a80e304c89459803a05c8a41980"
-                test = test + "1205c86c5b807405c8f85a80ef4a0000"
-                test = test + "c2430001000a1251140796805a00eda6"
-                test = test + "127f1ac8040a8967"
+                var test = "77f3536200a007e0"
+                test = test + "4c4c101a030000000000000000000000"
+                test = test + "0000000000000000b1190f154a06c8c8"
+                test = test + "5c015306c8d85c014706c8e05c015b06"
+                test = test + "c8bc5c016206c8c05c013606c8b85c01"
+                test = test + "5706c8b05c016206c8bc5c017c06c8b4"
+                test = test + "5c018f06c8a45c018906c8845c019a06"
+                test = test + "c8685c01a006c8345c01a906c8145c01"
+                test = test + "ae06c8105c016706c8b85c018703c848"
+                test = test + "5b014504c82c9b017d04c8c0da01e103"
+                test = test + "c8c8da016f03c8a09a014403c8b09a01"
+                test = test + "0804c8889a01f504c88c9a01cc05c854"
+                test = test + "da013106c8745b010107c8345c01cf07"
+                test = test + "c8189c01ad08c8f45b016908c8bc5b01"
+                test = test + "1108c8f45b019407c80c5c015607c83c"
+                test = test + "5c014807c8a05c01ae06c8245d019506"
+                test = test + "c8b85c018f06c8845c017305c8901e01"
+                test = test + "9005c8c81d018c05c8101d017605c8a4"
+                test = test + "5c016105c8545c011605c8009c012405"
+                test = test + "c8f45b01d404c8f09b017504c8a09b01"
+                test = test + "0704c8605b016503c8645b011f4e0000"
+                test = test + "2cd400013e0af250140796805a00eda6"
+                test = test + "005b1ac8047dd968"
                 
                 if let testData = Data(hexadecimalString: test) {
                     
                     if let libreSensorSerialNumber = LibreSensorSerialNumber(withUID: Data(testData.subdata(in: 0..<8)))  {
                         
                         debuglogging("serial = " + libreSensorSerialNumber.serialNumber)
-                        LibreDataParser.libreDataProcessor(libreSensorSerialNumber: libreSensorSerialNumber, patchInfo: patchInfo, webOOPEnabled: true, oopWebSite: ConstantsLibre.site, oopWebToken: ConstantsLibre.token, libreData: (testData.subdata(in: 8..<(344 + 8))), cgmTransmitterDelegate: nil, timeStampLastBgReading: Date(timeIntervalSince1970: 0), completionHandler: {
+                        LibreDataParser.libreDataProcessor(libreSensorSerialNumber: libreSensorSerialNumber, patchInfo: patchInfo, webOOPEnabled: true, oopWebSite: ConstantsLibre.site, oopWebToken: ConstantsLibre.token, libreData: (testData.subdata(in: 8..<(344 + 8))), cgmTransmitterDelegate: self, timeStampLastBgReading: Date(timeIntervalSince1970: 0), completionHandler: {
                             
                             (timeStampLastBgReading: Date?, sensorState: LibreSensorState?, xDripError: XdripError?) in
                             

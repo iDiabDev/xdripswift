@@ -127,7 +127,7 @@ class LibreDataParser {
             case .libre1A2, .libre1, .libreProH:// these types are all Libre 1
                 
                 // If the values are already available in userdefaults , then use those values
-                if let libre1DerivedAlgorithmParameters = UserDefaults.standard.libre1DerivedAlgorithmParameters, libre1DerivedAlgorithmParameters.serialNumber == libreSensorSerialNumber.serialNumber {
+               /* if let libre1DerivedAlgorithmParameters = UserDefaults.standard.libre1DerivedAlgorithmParameters, libre1DerivedAlgorithmParameters.serialNumber == libreSensorSerialNumber.serialNumber {
                     
                     trace("in libreDataProcessor, found libre1DerivedAlgorithmParameters in UserDefaults", log: log, category: ConstantsLog.categoryLibreOOPClient, type: .info)
                     
@@ -138,8 +138,12 @@ class LibreDataParser {
                     
                     return
                     
-                }
+                }*/
 
+                debuglogging("bytes to post = " + libreData.hexEncodedString())
+                debuglogging("site = " + oopWebSite.description)
+                debuglogging("token = " + oopWebToken.description)
+                
                 // get LibreDerivedAlgorithmParameters and parse using the libre1DerivedAlgorithmParameters
                 LibreOOPClient.getOopWebCalibrationStatus(bytes: libreData, libreSensorSerialNumber: libreSensorSerialNumber, oopWebSite: oopWebSite, oopWebToken: oopWebToken) { (oopWebCalibrationStatus, xDripError) in
 
