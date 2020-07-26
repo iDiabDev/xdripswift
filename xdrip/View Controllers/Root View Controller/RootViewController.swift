@@ -38,10 +38,6 @@ final class RootViewController: UIViewController {
     
     @IBAction func preSnoozeButtonAction(_ sender: UIButton) {
         
-        let alert = UIAlertController(title: "Info", message: "Unfortuantely, presnooze functionality is not yet implemented", actionHandler: nil)
-        
-        self.present(alert, animated: true, completion: nil)
-
     }
     
     /// outlet for label that shows how many minutes ago and so on
@@ -254,9 +250,6 @@ final class RootViewController: UIViewController {
         // enable or disable the buttons 'sensor' and 'calibrate' on top, depending on master or follower
         changeButtonsStatusTo(enabled: UserDefaults.standard.isMaster)
 
-        // disable the presnooze button as it's not yet implemented
-        preSnoozeButtonOutlet.disable()
-        
         // initialize glucoseChartManager
         glucoseChartManager = GlucoseChartManager(chartLongPressGestureRecognizer: chartLongPressGestureRecognizerOutlet)
 
