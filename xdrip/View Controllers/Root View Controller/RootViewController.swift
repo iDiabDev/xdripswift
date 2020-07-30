@@ -295,68 +295,77 @@ final class RootViewController: UIViewController {
             }
             
             // test bubble data
-            if let patchInfoAsData = Data(hexadecimalString: "c1000a0000a2080001d929f83000") {
+            // if let patchInfoAsData = Data(hexadecimalString: "c1000a0000a2080001d929f83000") {
+            
+            //let patchInfo = patchInfoAsData.subdata(in: 5 ..< 11).hexEncodedString().uppercased()
+            //debuglogging("patchInfo = " + patchInfo)
+            
+            /* var test = "77f3536200a007e0"
+             test = test + "4c4c101a030000000000000000000000"
+             test = test + "0000000000000000b1190f154a06c8c8"
+             test = test + "5c015306c8d85c014706c8e05c015b06"
+             test = test + "c8bc5c016206c8c05c013606c8b85c01"
+             test = test + "5706c8b05c016206c8bc5c017c06c8b4"
+             test = test + "5c018f06c8a45c018906c8845c019a06"
+             test = test + "c8685c01a006c8345c01a906c8145c01"
+             test = test + "ae06c8105c016706c8b85c018703c848"
+             test = test + "5b014504c82c9b017d04c8c0da01e103"
+             test = test + "c8c8da016f03c8a09a014403c8b09a01"
+             test = test + "0804c8889a01f504c88c9a01cc05c854"
+             test = test + "da013106c8745b010107c8345c01cf07"
+             test = test + "c8189c01ad08c8f45b016908c8bc5b01"
+             test = test + "1108c8f45b019407c80c5c015607c83c"
+             test = test + "5c014807c8a05c01ae06c8245d019506"
+             test = test + "c8b85c018f06c8845c017305c8901e01"
+             test = test + "9005c8c81d018c05c8101d017605c8a4"
+             test = test + "5c016105c8545c011605c8009c012405"
+             test = test + "c8f45b01d404c8f09b017504c8a09b01"
+             test = test + "0704c8605b016503c8645b011f4e0000"
+             test = test + "2cd400013e0af250140796805a00eda6"
+             test = test + "005b1ac8047dd968"*/
+            
+            // miaomiao thijs
+            var test = "28016b00b63a4bcb6000a007e06400041001815a101c0300000000000000000000000000000000000000793a060cfd02c89060801203c85c60803e03c82860807e03c8f45f80b103c8c85f80cd0388965f80df02c8e8a280e402c8c0a280ea02c864a380e302c8e0a280e402c8546280db02c8f86180d602c8ac6180d802c8606180"
+            
+            test = test + "e402c814a180ef02c8d06080d906c868a1803606c8785f80db04c8385e80bd03c8345d803303c8785d801b03c8145d80bc03c8f05d80bd03c87c5d80c603c8605d806203c8241d80ef02c828e4805f03c8f45f8000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"
+            
+            test = test + "0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000b60000005bf50001e508f450140796805a00eda600591ac80492996e29"
+            
+            if let testData = Data(hexadecimalString: test) {
                 
-                let patchInfo = patchInfoAsData.subdata(in: 5 ..< 11).hexEncodedString().uppercased()
-                debuglogging("patchInfo = " + patchInfo)
+                CGMMiaoMiaoTransmitter.peripheral(didUpdateValueFor: testData, error: nil)
                 
-                var test = "77f3536200a007e0"
-                test = test + "4c4c101a030000000000000000000000"
-                test = test + "0000000000000000b1190f154a06c8c8"
-                test = test + "5c015306c8d85c014706c8e05c015b06"
-                test = test + "c8bc5c016206c8c05c013606c8b85c01"
-                test = test + "5706c8b05c016206c8bc5c017c06c8b4"
-                test = test + "5c018f06c8a45c018906c8845c019a06"
-                test = test + "c8685c01a006c8345c01a906c8145c01"
-                test = test + "ae06c8105c016706c8b85c018703c848"
-                test = test + "5b014504c82c9b017d04c8c0da01e103"
-                test = test + "c8c8da016f03c8a09a014403c8b09a01"
-                test = test + "0804c8889a01f504c88c9a01cc05c854"
-                test = test + "da013106c8745b010107c8345c01cf07"
-                test = test + "c8189c01ad08c8f45b016908c8bc5b01"
-                test = test + "1108c8f45b019407c80c5c015607c83c"
-                test = test + "5c014807c8a05c01ae06c8245d019506"
-                test = test + "c8b85c018f06c8845c017305c8901e01"
-                test = test + "9005c8c81d018c05c8101d017605c8a4"
-                test = test + "5c016105c8545c011605c8009c012405"
-                test = test + "c8f45b01d404c8f09b017504c8a09b01"
-                test = test + "0704c8605b016503c8645b011f4e0000"
-                test = test + "2cd400013e0af250140796805a00eda6"
-                test = test + "005b1ac8047dd968"
-                
-                if let testData = Data(hexadecimalString: test) {
+              /*  if let libreSensorSerialNumber = LibreSensorSerialNumber(withUID: Data(testData.subdata(in: 0..<8)))  {
                     
-                    if let libreSensorSerialNumber = LibreSensorSerialNumber(withUID: Data(testData.subdata(in: 0..<8)))  {
+                    debuglogging("serial = " + libreSensorSerialNumber.serialNumber)
+                    LibreDataParser.libreDataProcessor(libreSensorSerialNumber: libreSensorSerialNumber, patchInfo: nil, webOOPEnabled: true, oopWebSite: ConstantsLibre.site, oopWebToken: ConstantsLibre.token, libreData: (testData.subdata(in: 8..<(344 + 8))), cgmTransmitterDelegate: self, timeStampLastBgReading: Date(timeIntervalSince1970: 0), completionHandler: {
                         
-                        debuglogging("serial = " + libreSensorSerialNumber.serialNumber)
-                        LibreDataParser.libreDataProcessor(libreSensorSerialNumber: libreSensorSerialNumber, patchInfo: patchInfo, webOOPEnabled: true, oopWebSite: ConstantsLibre.site, oopWebToken: ConstantsLibre.token, libreData: (testData.subdata(in: 8..<(344 + 8))), cgmTransmitterDelegate: self, timeStampLastBgReading: Date(timeIntervalSince1970: 0), completionHandler: {
-                            
-                            (timeStampLastBgReading: Date?, sensorState: LibreSensorState?, xDripError: XdripError?) in
-                            
-                            if let timeStampLastBgReading = timeStampLastBgReading {
-                                debuglogging("timeStampLastBgReading = " + timeStampLastBgReading.description(with: .current))
-                            }
-                            
-                            if let sensorState = sensorState {
-                                debuglogging("sensorstate = " + sensorState.description)
-                            }
-                            
-                            if let xdriperror = xDripError , let errorDescription = xdriperror.errorDescription {
-                                debuglogging("xdriperror = " + errorDescription)
-                            }
-                            
-                            
-                        }  )
+                        (timeStampLastBgReading: Date?, sensorState: LibreSensorState?, xDripError: XdripError?) in
                         
-                    }
+                        if let timeStampLastBgReading = timeStampLastBgReading {
+                            debuglogging("timeStampLastBgReading = " + timeStampLastBgReading.description(with: .current))
+                        }
+                        
+                        if let sensorState = sensorState {
+                            debuglogging("sensorstate = " + sensorState.description)
+                        }
+                        
+                        if let xdriperror = xDripError , let errorDescription = xdriperror.errorDescription {
+                            debuglogging("xdriperror = " + errorDescription)
+                        }
+                        
+                        
+                    }  )
                     
-                    
-                }
+                }*/
                 
-
+                
+                //}
+                
+                
             }
             
-            
+
             
         })
         
