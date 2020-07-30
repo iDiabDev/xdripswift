@@ -254,6 +254,61 @@ class CGMMiaoMiaoTransmitter:BluetoothTransmitter, CGMTransmitter {
         
     }
     
+    public static func peripheral(didUpdateValueFor value: Data, error: Error?) {
+        
+        var rxBuffer = Data()
+        
+        // add new packet to buffer
+        rxBuffer.append(value)
+        
+        //check type of message and process according to type
+        if let firstByte = rxBuffer.first {
+            if let miaoMiaoResponseState = MiaoMiaoResponseType(rawValue: firstByte) {
+                switch miaoMiaoResponseState {
+                    
+                case .dataPacket:
+                    //if buffer complete, then start processing
+                    if rxBuffer.count >= 363  {
+                        
+                        // first off all see if the buffer contains patchInfo, and if yes send to delegate
+                        if rxBuffer.count >= 369 {
+                            
+                            fatalError()
+                            
+                        }
+                        
+                        //get MiaoMiao info from MiaoMiao header
+                        let firmware = String(describing: rxBuffer[14...15].hexEncodedString())
+                        let hardware = String(describing: rxBuffer[16...17].hexEncodedString())
+                        let batteryPercentage = Int(rxBuffer[13])
+                        
+                        // get sensor serialNumber and if changed inform delegate
+                        if let libreSensorSerialNumber = LibreSensorSerialNumber(withUID: Data(rxBuffer.subdata(in: 5..<13))) {
+                            
+                            // (there will also be a seperate opcode form MiaoMiao because it's able to detect new sensor also)
+                            
+                            let sensorSerialNumber = libreSensorSerialNumber.serialNumber
+                            
+                            debuglogging("sensor detected =" + sensorSerialNumber)
+
+                            LibreDataParser.libreDataProcessor(sensorSerialNumber: libreSensorSerialNumber.serialNumber, webOOPEnabled: true, oopWebSite: ConstantsLibre.site, oopWebToken: ConstantsLibre.token, libreData: (rxBuffer.subdata(in: 18..<(344 + 18))), cgmTransmitterDelegate: nil, transmitterBatteryInfo: nil, firmware: nil, hardware: nil, hardwareSerialNumber: nil, bootloader: nil, timeStampLastBgReading: Date(timeIntervalSince1970: 0), completionHandler: { timeStampLastBgReading in
+                                
+                                debuglogging("timestamplstbgreading = " + timeStampLastBgReading.description(with: .current))
+                                
+                            })
+
+                            
+                        }
+                        
+                    }
+                default:
+                    break
+                }
+            }
+        }
+        
+    }
+    
     // MARK: CGMTransmitter protocol functions
     
     /// this transmitter supports oopWeb

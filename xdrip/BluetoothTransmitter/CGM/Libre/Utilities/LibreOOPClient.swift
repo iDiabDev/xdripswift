@@ -144,6 +144,10 @@ class LibreOOPClient {
                 return
             }
             
+            if let dataAsString = String(bytes: data, encoding: .utf8) {
+                trace("in createDataTaskAndHandleResponse, data as string = %{public}@", log: log, category: ConstantsLog.categoryLibreOOPClient, type: .debug, dataAsString)
+            }
+            
             var getCalibrationStatus:GetCalibrationStatus?
             do {
                 getCalibrationStatus = try JSONDecoder().decode(GetCalibrationStatus.self, from: data)
