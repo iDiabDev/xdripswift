@@ -447,6 +447,7 @@ fileprivate func parseLibre1DataWithOOPWebCalibration(libreData: Data, libre1Der
                 if timeStampOfNewGlucoseData.toMillisecondsAsDouble() < timeStampLastAddedGlucoseDataAsDouble - (5 * 60 * 1000 - 10000) {
                     timeStampLastAddedGlucoseDataAsDouble = timeStampOfNewGlucoseData.toMillisecondsAsDouble()
                     finalResult.append(glucose)
+                    debuglogging("glucose = " + glucose.glucoseLevelRaw.description)
                 }
                 
             } else {
