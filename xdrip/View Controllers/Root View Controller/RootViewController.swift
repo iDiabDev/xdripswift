@@ -333,7 +333,7 @@ final class RootViewController: UIViewController {
             
             if let testData = Data(hexadecimalString: test) {
                 
-                CGMMiaoMiaoTransmitter.peripheral(didUpdateValueFor: testData, error: nil)
+                CGMMiaoMiaoTransmitter.peripheral(didUpdateValueFor: testData, error: nil, cgmTransmitterDelegate: self)
                 
               /*  if let libreSensorSerialNumber = LibreSensorSerialNumber(withUID: Data(testData.subdata(in: 0..<8)))  {
                     

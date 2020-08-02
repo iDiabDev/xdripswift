@@ -298,12 +298,14 @@ class CGMMiaoMiaoTransmitter:BluetoothTransmitter, CGMTransmitter {
         
     }
     
-    public static func peripheral(didUpdateValueFor value: Data, error: Error?) {
+    public static func peripheral(didUpdateValueFor value: Data, error: Error?, cgmTransmitterDelegate: CGMTransmitterDelegate?) {
         
         var rxBuffer = Data()
         
         // add new packet to buffer
         rxBuffer.append(value)
+        
+        var patchInfo:String?
         
         //check type of message and process according to type
         if let firstByte = rxBuffer.first {
@@ -317,7 +319,12 @@ class CGMMiaoMiaoTransmitter:BluetoothTransmitter, CGMTransmitter {
                         // first off all see if the buffer contains patchInfo, and if yes send to delegate
                         if rxBuffer.count >= 369 {
                             
-                            fatalError()
+                            patchInfo = Data(rxBuffer[363...368]).hexEncodedString().uppercased()
+                            
+                            if let patchInfo = patchInfo {
+                                debuglogging("    received patchInfo " + patchInfo)
+                            }
+
                             
                         }
                         
@@ -356,7 +363,7 @@ class CGMMiaoMiaoTransmitter:BluetoothTransmitter, CGMTransmitter {
                         }
                         
                         // send battery level to delegate
-                        LibreDataParser.libreDataProcessor(libreSensorSerialNumber: LibreSensorSerialNumber(withUID: Data(rxBuffer.subdata(in: 5..<13))), patchInfo: nil, webOOPEnabled: true, oopWebSite: ConstantsLibre.site, oopWebToken: ConstantsLibre.token, libreData: (rxBuffer.subdata(in: 18..<(344 + 18))), cgmTransmitterDelegate: nil, timeStampLastBgReading: Date(timeIntervalSince1970: 0), completionHandler: { (timeStampLastBgReading: Date?, sensorState: LibreSensorState?, xDripError: XdripError?) in
+                        LibreDataParser.libreDataProcessor(libreSensorSerialNumber: LibreSensorSerialNumber(withUID: Data(rxBuffer.subdata(in: 5..<13))), patchInfo: patchInfo, webOOPEnabled: true, oopWebSite: ConstantsLibre.site, oopWebToken: ConstantsLibre.token, libreData: (rxBuffer.subdata(in: 18..<(344 + 18))), cgmTransmitterDelegate: cgmTransmitterDelegate, timeStampLastBgReading: Date(timeIntervalSince1970: 0), completionHandler: { (timeStampLastBgReading: Date?, sensorState: LibreSensorState?, xDripError: XdripError?) in
                             
                             if let timeStampLastBgReading = timeStampLastBgReading {
                                 debuglogging("timeStampLastBgReading = " + timeStampLastBgReading.description(with: .current) )
